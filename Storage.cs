@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿// (c) 2023 Alex Kalkatos
+// This code is licensed under MIT license (see LICENSE.txt for details)
+
+using System.Collections.Generic;
 using System.IO;
-using System.Net.Sockets;
 using Newtonsoft.Json;
 #if UNITY_5_3_OR_NEWER
 using UnityEngine;
@@ -9,6 +10,9 @@ using UnityEngine;
 
 namespace Kalkatos
 {
+	/// <summary>
+	/// Provides a solution for storing and retrieving data for any platform.
+	/// </summary>
 	public class Storage
 	{
 #if UNITY_5_3_OR_NEWER

@@ -1,16 +1,22 @@
-﻿using System;
+﻿// (c) 2023 Alex Kalkatos
+// This code is licensed under MIT license (see LICENSE.txt for details)
+
+using System;
 #if UNITY_5_3_OR_NEWER
 using UnityEngine;
 #endif
 
 namespace Kalkatos
 {
+	/// <summary>
+	/// Provides logging solutions for any platform.
+	/// </summary>
 	public class Logger
 	{
 #if UNITY_5_3_OR_NEWER
-		private static UnityLogger log = new UnityLogger();
+		private static ILoggger log = new UnityLogger();
 #else
-		private static BaseLogger log = new BaseLogger();
+		private static ILoggger log = new BaseLogger();
 #endif
 
 		public static void Log (string msg) 
@@ -29,7 +35,14 @@ namespace Kalkatos
 		}
 	}
 
-	public class BaseLogger
+	public interface ILoggger
+	{
+		void Log (string msg);
+		void LogWarning (string msg);
+		void LogError (string msg);
+	}
+
+	public class BaseLogger : ILoggger
 	{
 		public void Log (string msg)
 		{
@@ -48,7 +61,7 @@ namespace Kalkatos
 	}
 
 #if UNITY_5_3_OR_NEWER
-	public class UnityLogger
+	public class UnityLogger : ILoggger
 	{
 		public void Log (string msg)
 		{
