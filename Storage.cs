@@ -46,6 +46,12 @@ namespace Kalkatos
 			storage.Save(key, value);
 		}
 
+		public static bool TryLoad (string key, string defaultValue, out string value)
+		{
+			value = Load(key, defaultValue);
+			return value != defaultValue;
+		}
+
 		public static string Load (string key, string defaultValue)
 		{
 			return storage.Load(key, defaultValue);
