@@ -7,6 +7,9 @@ using Newtonsoft.Json;
 #if UNITY_5_3_OR_NEWER
 using UnityEngine;
 #endif
+#if GODOT
+using Godot;
+#endif
 
 namespace Kalkatos
 {
@@ -17,6 +20,8 @@ namespace Kalkatos
 	{
 #if UNITY_5_3_OR_NEWER
 		private static IStorage storage = new UnityStorage();
+#elif GODOT
+		private static IStorage storage = new GodotStorage();
 #else
 		private static IStorage storage = new FileStorage();
 #endif
@@ -231,5 +236,12 @@ namespace Kalkatos
 		PlayerPrefs,
 		PersistentDataPath
 	}
+#endif
+
+#if GODOT
+    public class GodotStorage : FileStorage
+    {
+        public override string FilePath { get => OS.GetUserDataDir(); set { } }
+    }
 #endif
 }

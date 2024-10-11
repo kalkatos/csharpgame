@@ -5,6 +5,9 @@ using System;
 #if UNITY_5_3_OR_NEWER
 using UnityEngine;
 #endif
+#if GODOT
+using Godot;
+#endif
 
 namespace Kalkatos
 {
@@ -14,12 +17,14 @@ namespace Kalkatos
 	public class Logger
 	{
 #if UNITY_5_3_OR_NEWER
-		private static ILoggger log = new UnityLogger();
+		private static ILogger log = new UnityLogger();
+#elif GODOT
+		private static ILogger log = new GodotLogger();
 #else
-		private static ILoggger log = new BaseLogger();
+		private static ILogger log = new BaseLogger();
 #endif
 
-		public static void Log (string msg) 
+        public static void Log (string msg) 
 		{
 			log.Log(msg);
 		}
@@ -35,14 +40,14 @@ namespace Kalkatos
 		}
 	}
 
-	public interface ILoggger
+	public interface ILogger
 	{
 		void Log (string msg);
 		void LogWarning (string msg);
 		void LogError (string msg);
 	}
 
-	public class BaseLogger : ILoggger
+	public class BaseLogger : ILogger
 	{
 		public void Log (string msg)
 		{
@@ -61,7 +66,7 @@ namespace Kalkatos
 	}
 
 #if UNITY_5_3_OR_NEWER
-	public class UnityLogger : ILoggger
+	public class UnityLogger : ILogger
 	{
 		public void Log (string msg)
 		{
@@ -78,5 +83,25 @@ namespace Kalkatos
 			Debug.LogError(msg);
 		}
 	}
+#endif
+
+#if GODOT
+    public class GodotLogger : ILogger
+    {
+        public void Log (string msg)
+        {
+			GD.Print(msg);
+        }
+
+        public void LogError (string msg)
+        {
+			GD.PrintErr(msg);
+        }
+
+        public void LogWarning (string msg)
+        {
+			GD.PushWarning(msg);
+        }
+    }
 #endif
 }
