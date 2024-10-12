@@ -88,19 +88,24 @@ namespace Kalkatos
 #if GODOT
     public class GodotLogger : ILogger
     {
+		public static event Action<string> OnLog;
+
         public void Log (string msg)
         {
+			OnLog?.Invoke(msg);
 			GD.Print(msg);
         }
 
         public void LogError (string msg)
         {
-			GD.PrintErr(msg);
+            OnLog?.Invoke($"[ERROR] {msg}");
+            GD.PrintErr(msg);
         }
 
         public void LogWarning (string msg)
         {
-			GD.PushWarning(msg);
+            OnLog?.Invoke($"[WARNING] {msg}");
+            GD.PushWarning(msg);
         }
     }
 #endif
