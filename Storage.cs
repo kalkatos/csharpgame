@@ -1,4 +1,4 @@
-﻿// (c) 2023 Alex Kalkatos
+// (c) 2023 Alex Kalkatos
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
 using System.Collections.Generic;
@@ -239,9 +239,9 @@ namespace Kalkatos
 #endif
 
 #if GODOT
-    public class GodotStorage : FileStorage
-    {
-        public override string FilePath { get => OS.GetUserDataDir(); set { } }
-    }
+	public class GodotStorage : FileStorage
+	{
+		public override string FilePath { get => OS.GetUserDataDir(); set { } }
+	}
 #endif
 }

@@ -1,4 +1,4 @@
-﻿// (c) 2023 Alex Kalkatos
+// (c) 2023 Alex Kalkatos
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
 using System;
@@ -24,7 +24,7 @@ namespace Kalkatos
 		private static ILogger log = new BaseLogger();
 #endif
 
-        public static void Log (string msg) 
+		public static void Log (string msg) 
 		{
 			log.Log(msg);
 		}
@@ -86,27 +86,27 @@ namespace Kalkatos
 #endif
 
 #if GODOT
-    public class GodotLogger : ILogger
-    {
+	public class GodotLogger : ILogger
+	{
 		public static event Action<string> OnLog;
 
-        public void Log (string msg)
-        {
+		public void Log (string msg)
+		{
 			OnLog?.Invoke(msg);
 			GD.Print(msg);
-        }
+		}
 
-        public void LogError (string msg)
-        {
-            OnLog?.Invoke($"[ERROR] {msg}");
-            GD.PrintErr(msg);
-        }
+		public void LogError (string msg)
+		{
+			OnLog?.Invoke($"[ERROR] {msg}");
+			GD.PrintErr(msg);
+		}
 
-        public void LogWarning (string msg)
-        {
-            OnLog?.Invoke($"[WARNING] {msg}");
-            GD.PushWarning(msg);
-        }
-    }
+		public void LogWarning (string msg)
+		{
+			OnLog?.Invoke($"[WARNING] {msg}");
+			GD.PushWarning(msg);
+		}
+	}
 #endif
 }
