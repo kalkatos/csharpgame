@@ -3,11 +3,12 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 #if UNITY_5_3_OR_NEWER
+using Newtonsoft.Json;
 using UnityEngine;
 #endif
 #if GODOT
+using System.Text.Json;
 using Godot;
 #endif
 
@@ -135,18 +136,18 @@ namespace Kalkatos
 		{
 			if (File.Exists($"{FilePath}/{FileName}"))
 			{
-				var prefs = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText($"{FilePath}/{FileName}"));
+				var prefs = Deserialize<Dictionary<string, string>>(File.ReadAllText($"{FilePath}/{FileName}"));
 				if (prefs.ContainsKey(key))
 					prefs.Remove(key);
 				SaveDictionary(prefs);
 			}
 		}
-		
+
 		private string OpenLoad (string key, string defaultValue)
 		{
 			if (File.Exists($"{FilePath}/{FileName}"))
 			{
-				var prefs = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText($"{FilePath}/{FileName}"));
+				var prefs = Deserialize<Dictionary<string, string>>(File.ReadAllText($"{FilePath}/{FileName}"));
 				if (prefs.ContainsKey(key))
 					return prefs[key];
 				return defaultValue;
@@ -160,7 +161,7 @@ namespace Kalkatos
 			Dictionary<string, string> prefs = null;
 			if (File.Exists($"{FilePath}/{FileName}"))
 			{
-				prefs = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText($"{FilePath}/{FileName}"));
+				prefs = Deserialize<Dictionary<string, string>>(File.ReadAllText($"{FilePath}/{FileName}"));
 				if (prefs.ContainsKey(key))
 					prefs[key] = value;
 				else
@@ -173,7 +174,25 @@ namespace Kalkatos
 
 		private void SaveDictionary (Dictionary<string, string> dict)
 		{
-			File.WriteAllText($"{FilePath}/{FileName}", JsonConvert.SerializeObject(dict));
+			File.WriteAllText($"{FilePath}/{FileName}", Serialize(dict));
+		}
+
+		private string Serialize<T> (T obj)
+		{
+#if UNITY_5_3_OR_NEWER
+			return JsonConvert.SerializeObject(obj);
+#elif GODOT
+			return JsonSerializer.Serialize(obj);
+#endif
+		}
+
+		private T Deserialize<T> (string json)
+		{
+#if UNITY_5_3_OR_NEWER
+			return JsonConvert.DeserializeObject<T>(json);
+#elif GODOT
+			return JsonSerializer.Deserialize<T>(json);
+#endif
 		}
 	}
 
