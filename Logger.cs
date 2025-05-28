@@ -24,7 +24,7 @@ namespace Kalkatos
 		private static ILogger log = new BaseLogger();
 #endif
 
-		public static void Log (string msg) 
+		public static void Log (string msg)
 		{
 			log.Log(msg);
 		}

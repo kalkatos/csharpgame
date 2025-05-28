@@ -11,7 +11,7 @@ namespace Kalkatos
 	/// <typeparam name="T">Any type.</typeparam>
 	public interface IValueGetter<T>
 	{
-		T GetValue();
+		T GetValue ();
 	}
 
 	[Serializable]
