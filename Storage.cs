@@ -15,7 +15,7 @@ using Godot;
 namespace Kalkatos
 {
 	/// <summary>
-	/// Provides a solution for storing and retrieving data for any platform.
+	/// Provides a simple storage system for saving and loading key-value pairs.
 	/// </summary>
 	public class Storage
 	{

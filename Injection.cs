@@ -6,10 +6,18 @@ using System.Collections.Generic;
 
 namespace Kalkatos
 {
+	/// <summary>
+	/// Provides a simple dependency injection system.
+	/// </summary>
 	public class Injection
 	{
 		private static Dictionary<Type, object> instances = new();
 
+		/// <summary>
+		/// Binds an object of type T to the dependency injection system.
+		/// </summary>
+		/// <typeparam name="T">The type of the object to bind.</typeparam>
+		/// <param name="obj">The object to bind.</param>
 		public static void Bind<T> (T obj)
 		{
 			if (!instances.ContainsKey(typeof(T)))
@@ -20,6 +28,12 @@ namespace Kalkatos
 			instances[typeof(T)] = obj;
 		}
 
+		/// <summary>
+		/// Resolves an instance of type T from the dependency injection system.
+		/// </summary>
+		/// <typeparam name="T">The type of the object to resolve.</typeparam>
+		/// <param name="instance">The resolved instance of type T.</param>
+		/// <param name="quiet">If true, suppresses error logging if no binding is found.</param>
 		public static void Resolve<T> (out T instance, bool quiet = false)
 		{
 			if (instances.ContainsKey(typeof(T)))
