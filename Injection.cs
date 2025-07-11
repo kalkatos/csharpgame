@@ -45,5 +45,12 @@ namespace Kalkatos
 				Logger.LogError($"No binding found for type {typeof(T)}");
 			instance = default;
 		}
+
+		public static T Resolve<T> (bool quiet = false)
+		{
+			T instance;
+			Resolve(out instance, quiet);
+			return instance;
+		}
 	}
 }
